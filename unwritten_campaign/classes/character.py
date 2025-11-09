@@ -86,7 +86,7 @@ class Character_Sheet:
     
     def prof_bonus(self, prof_bonus: str):
         self.prof_bonus = prof_bonus
-        match prof_bonus:
+        match prof_bonus.lower():
             case 'strength':
                 self.strength += 2
                 print("\tNew strength: " + str(self.strength))
@@ -104,7 +104,7 @@ class Character_Sheet:
                 print("\tNew wisdom: " + str(self.wisdom))
             case 'charisma':
                 self.charisma += 2
-                print("\tNew charimsa: " + str(self.charisma))
+                print("\tNew charisma: " + str(self.charisma))
             case _:
                 print("\tsilly silly doesn't want one...")
 
@@ -121,7 +121,6 @@ class Character_Sheet:
 
         print(f"\nChoose {num_of_skills} skills from the following:")
         if options == ["Any"]:
-            # Let bard choose from all skills
             options = ["acrobatics", "animal handling", "arcana", "athletics", "deception", "history",
                     "insight", "intimidation", "investigation", "medicine", "nature", "perception",
                     "performance", "persuasion", "religion", "sleight of hand", "stealth", "survival"]
@@ -129,10 +128,15 @@ class Character_Sheet:
         for skill in options:
             print(f" - {skill}")
 
+        # Normalize options for comparison
+        normalized_options = [s.lower() for s in options]
+
         while len(selected_skills) < num_of_skills:
             choice = input("Enter a skill: ").strip()
-            if choice in options and choice not in selected_skills:
-                selected_skills.append(choice)
+            if choice.lower() in normalized_options and choice.lower() not in [s.lower() for s in selected_skills]:
+                # Preserve original casing from options
+                matched_skill = next(s for s in options if s.lower() == choice.lower())
+                selected_skills.append(matched_skill)
             else:
                 print("Invalid or duplicate skill.")
 

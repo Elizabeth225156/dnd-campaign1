@@ -1,19 +1,46 @@
 class_weapon_profs = {
+    "Barbarian": ["Simple", "Martial"],
+    "Bard": ["Simple", "Hand Crossbow", "Longsword", "Rapier", "Shortsword"],
+    "Cleric": ["Simple"],
+    "Druid": ["Clubs", "Daggers", "Darts", "Javelins", "Maces", "Quarterstaffs", "Scimitars", "Sickles", "Slings", "Spears"],
     "Fighter": ["Simple", "Martial"],
-    "Wizard": ["Simple"],
-    "Rogue": ["Simple", "Hand Crossbow", "Rapier", "Shortsword"]
+    "Monk": ["Simple", "Shortsword"],
+    "Paladin": ["Simple", "Martial"],
+    "Ranger": ["Simple", "Martial"],
+    "Rogue": ["Simple", "Hand Crossbow", "Longsword", "Rapier", "Shortsword"],
+    "Sorcerer": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+    "Warlock": ["Simple"],
+    "Wizard": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"]
 }
 
 background_weapon_profs = {
-    "Soldier": ["Martial", "Shield"],
+    "Acolyte": [],
+    "Charlatan": [],
+    "Criminal": ["Dagger", "Shortsword"],
+    "Entertainer": ["Dagger"],
+    "Folk Hero": ["Smith's Tools", "One type of artisan's tools", "Vehicles (land)"],  # No weapons, but often reflavored
+    "Guild Artisan": [],
+    "Hermit": [],
     "Noble": ["Rapier"],
-    "Criminal": ["Dagger", "Shortsword"]
+    "Outlander": ["Simple"],
+    "Sage": [],
+    "Sailor": ["Simple"],
+    "Soldier": ["Martial", "Shield"],
+    "Urchin": ["Dagger", "Sling"]
 }
 
 race_weapon_profs = {
-    "Elf": ["Longbow", "Shortsword"],
-    "Dwarf": ["Battleaxe", "Warhammer"]
+    "Dwarf": ["Battleaxe", "Handaxe", "Light Hammer", "Warhammer"],
+    "Elf": ["Longsword", "Shortsword", "Shortbow", "Longbow"],
+    "Halfling": [],  # No racial weapon proficiencies
+    "Human": [],     # No racial weapon proficiencies
+    "Dragonborn": [],  # Breath weapon, but no weapon profs
+    "Gnome": [],     # No weapon proficiencies
+    "Half-Elf": [],  # Inherits from class, not race
+    "Half-Orc": [],  # No weapon proficiencies
+    "Tiefling": []   # No weapon proficiencies
 }
+
 
 def get_total_weapon_proficiencies(char_class, race, background):
     char_class = char_class.title()
@@ -25,15 +52,11 @@ def get_total_weapon_proficiencies(char_class, race, background):
     profs.update(background_weapon_profs.get(background, []))
     profs.update(race_weapon_profs.get(race, []))
 
-
-    profs = set()
-    profs.update(class_weapon_profs.get(char_class, []))
-    profs.update(background_weapon_profs.get(background, []))
-    profs.update(race_weapon_profs.get(race, []))
     return list(profs)
 
 def filter_weapons_by_proficiency(proficiencies):
     proficiencies = [i.lower() for i in proficiencies]
+
     all_weapons = [
     {
         "name": "Dagger",
@@ -154,6 +177,7 @@ def filter_weapons_by_proficiency(proficiencies):
         for w in all_weapons
         if w["proficiency"].lower() in proficiencies or w["name"].lower() in proficiencies
     ]
+
 
 
 
