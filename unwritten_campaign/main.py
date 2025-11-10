@@ -149,13 +149,13 @@ else:
             print("Invalid choice. Please select a spell from the list.")
 
     char_sheet.spells.append(spell_choice)
-
+print()
 
 #Generate backstory
 ai = ai.AI(char_sheet)
 
-wrapped_print(ai.generate_backstory() , "\n")
-wrapped_print(ai.scene_creation(), "\n")
+wrapped_print(ai.generate_backstory())
+wrapped_print(ai.scene_creation())
 
 while True:
     user_input = input("\nWhat do you do? ")
